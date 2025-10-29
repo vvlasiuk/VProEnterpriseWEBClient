@@ -71,3 +71,4 @@ htmlcov/
 
 # Copilot files
 .copilot*
+node_modules

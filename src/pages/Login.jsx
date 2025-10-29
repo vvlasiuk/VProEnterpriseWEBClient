@@ -1,19 +1,21 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import authService from '../services/authService';
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     try {
       await authService.login(username, password);
-      window.location.href = '/'; // Redirect after login
+      navigate('/');
     } catch (err) {
-      setError('Невірний email або пароль');
+      setError('Невірний користувач або пароль');
     }
   };
 
