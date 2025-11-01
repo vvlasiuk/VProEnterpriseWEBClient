@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 
-// const base_url = "http://192.168.0.158:8000";
-const base_url = "http://localhost:8000";
+const base_url = "http://192.168.0.158:8000";
+// const base_url = "http://localhost:8000";
 
 const authService = {
   login: async (username, password) => {
@@ -18,6 +18,7 @@ const authService = {
       console.log('Відповідь сервера:', data);
       if (data.access_token) {
         localStorage.setItem('token', data.access_token);
+        localStorage.setItem('username', username);
       }
       return data;
     } catch (error) {
