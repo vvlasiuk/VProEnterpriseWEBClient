@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './pages/Login';
 import VPE from './pages/VPE';
 import PrivateRoute from './routes/PrivateRoute';
+import './styles/theme_green.css';
 
 function App() {
   return (
