@@ -17,7 +17,8 @@ const authService = {
       // console.log('Відповідь сервера:', data);
       if (data.access_token) {
         localStorage.setItem('token', data.access_token);
-        localStorage.setItem('username', username);
+        // localStorage.setItem('username', username);
+        localStorage.setItem('lastUserId', data.user_id);  // Зберігаємо id користувача
       }
       return data;
     } catch (error) {

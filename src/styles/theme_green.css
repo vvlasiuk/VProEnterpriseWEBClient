@@ -7,7 +7,7 @@
   --color-text: #718355;
   --color-text-dark: #222;
   --border-radius: 12px;
-  --input-padding: 12px;
+  --input-padding: 4px;
   --box-shadow: 0 4px 24px rgba(0,0,0,0.08);
 }
 
@@ -17,11 +17,14 @@ body {
   font-family: 'Inter', Arial, sans-serif;
 }
 
-input, button, .form-block {
+input, button, select.input {
   border-radius: var(--border-radius);
   border: 1px solid var(--color-border);
   padding: var(--input-padding);
   font-size: 1em;
+  height: 30px; 
+  background: var(--color-bg);
+  box-sizing: border-box;
 }
 
 button {

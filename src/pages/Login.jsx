@@ -10,7 +10,13 @@ const Login = () => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    authService.getUsers().then(data => setUsers(data.users));
+    authService.getUsers().then(data => {
+      setUsers(data.users);
+      const lastUserId = localStorage.getItem('lastUserId');
+      if (lastUserId && data.users.some(u => u.id === lastUserId)) {
+        setUsername(lastUserId);
+      }
+        });
   }, []);
 
   const handleSubmit = async (e) => {
@@ -24,18 +30,23 @@ const Login = () => {
     }
   };
 
+  const labelStyle = { fontWeight: 'bold', margin: 0, width: '100px', flexShrink: 0 };
+  const inputStyle = { width: '100%', minWidth: '120px', maxWidth: '220px' };
+
   return (
     <div style={{
       minHeight: '100vh',
       display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center'
-      // background: 'linear-gradient(120deg, #f8fafc 0%, #e0e7ff 100%)'
+      alignItems: 'flex-start',
+      justifyContent: 'center',
+      marginTop: '20vh'
     }}>
       <form
         onSubmit={handleSubmit}
         className="form-block"
-        style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}
+        style={{ display: 'flex', flexDirection: 'column', gap: '18px'
+          // , background: 'transparent' 
+        }}
       >
         <h2 style={{
           margin: 0,
@@ -44,32 +55,44 @@ const Login = () => {
         }}>
           Вхід до системи
         </h2>
-        <select
-          id="username"
-          name="username"
-          autoComplete="username"
-          value={username}
-          onChange={e => setUsername(e.target.value)}
-          className="input"
-        >
-          <option value="">Оберіть користувача</option>
-          {Array.isArray(users) && users
-            .filter(user => user.id && user.name)
-            .map(user => (
-              <option key={user.id} value={user.name}>
-                {user.name}
-              </option>
-            ))}
-        </select>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          placeholder="Пароль"
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-          className="input"
-        />
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <label htmlFor="username" style={labelStyle}>
+            Користувач
+          </label>
+          <select
+            id="username"
+            name="username"
+            autoComplete="username"
+            value={username}
+            onChange={e => setUsername(e.target.value)}
+            className="input"
+            style={inputStyle}
+          >
+            {/* <option value="">Оберіть користувача</option> */}
+            {Array.isArray(users) && users
+              .filter(user => user.id && user.name)
+              .map(user => (
+                <option key={user.id} value={user.id}>
+                  {user.name}
+                </option>
+              ))}
+          </select>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <label htmlFor="password" style={labelStyle}>
+            Пароль
+          </label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Пароль"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            className="input"
+            style={inputStyle}
+          />
+        </div>
         {error && (
           <div style={{ color: '#e01717', textAlign: 'center', fontSize: '0.95em' }}>
             {error}
