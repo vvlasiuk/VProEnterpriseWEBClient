@@ -38,7 +38,8 @@ const VPE = () => {
     case 'openBrandsList':
       return <BrandsComponent />;
     case 'openInfo':
-      return <InfoTab username={username} />;
+      return <InfoTab />;
+      // return <InfoTab username={username} />;
     default:
       return null;
     } 

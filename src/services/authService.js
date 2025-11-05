@@ -45,7 +45,16 @@ const authService = {
       });
       if (!response.ok) throw new Error('Не вдалося отримати список користувачів');
       return await response.json();
-    }  
+    },
+  getMe: async () => {
+    const response = await fetch(`${base_url}/api/v1/me`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+    if (!response.ok) throw new Error('Not authorized');
+    return response.json();
+  }
 };
 
 export default authService;
