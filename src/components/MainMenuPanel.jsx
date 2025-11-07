@@ -3,7 +3,7 @@ import BrandsComponent from './BrandsComponent';
 
 const menuItems = [
   { title: 'Бренди', command: 'openBrandsList', content: <BrandsComponent /> },
-  { title: 'Користувачі', command: 'openBrandsList', content: <BrandsComponent /> },
+  { title: 'Користувачі', command: 'openUsersList', content: <BrandsComponent /> },
   // { title: 'Звіти', command: 'openReports', content: <ReportsComponent /> }
 ];
 
@@ -21,8 +21,8 @@ const MainMenuPanel = ({ showMenu, setShowMenu, addTab }) => (
       flexDirection: 'column',
       alignItems: 'flex-start',
     }}>
-      {menuItems.map(item => (
-        <button key={item.command} onClick={() => { addTab(item); setShowMenu(false); }}>
+      {menuItems.map((item, idx) => (
+        <button key={"menuItems" + idx} onClick={() => { addTab(item); setShowMenu(false); }}>
           {item.title}
         </button>
       ))}      

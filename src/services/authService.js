@@ -18,7 +18,7 @@ const authService = {
       if (data.access_token) {
         localStorage.setItem('token', data.access_token);
         // localStorage.setItem('username', username);
-        console.log('lastUserId:', data.user._id);
+        // console.log('lastUserId:', data.user._id);
         localStorage.setItem('lastUserId', data.user._id);  // Зберігаємо id користувача
       }
       return data;
@@ -55,7 +55,16 @@ const authService = {
     });
     if (!response.ok) throw new Error('Not authorized');
     return response.json();
-  }
+  },
+  checkToken: async () => {
+    const response = await fetch(`${base_url}/api/v1/auth/protected`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+    if (!response.ok) throw new Error('Token not valid');
+    return response.json();
+}  
 };
 
 export default authService;

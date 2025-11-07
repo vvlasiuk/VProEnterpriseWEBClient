@@ -1,6 +1,7 @@
 import React from 'react';
 import MainMenuPanel from '../components/MainMenuPanel';
 import BrandsComponent from '../components/BrandsComponent';
+import UserComponent from '../components/UserComponent';
 import InfoTab from '../components/InfoTab';
 import HeaderPanel from '../components/HeaderPanel';
 import HeaderTabsPanel from '../components/HeaderTabsPanel';
@@ -37,6 +38,8 @@ const VPE = () => {
   switch (tab.command) {
     case 'openBrandsList':
       return <BrandsComponent />;
+    case 'openUsersList':
+      return <UserComponent />;
     case 'openInfo':
       return <InfoTab />;
       // return <InfoTab username={username} />;
@@ -58,7 +61,7 @@ const VPE = () => {
       setTabs={setTabs}
     />      
       <MainMenuPanel showMenu={showMenu} setShowMenu={setShowMenu} addTab={addTab} />
-      <div style={{ padding: '16px' }}>
+      <div>
         {activeTabObj && getTabContent(activeTabObj)}
     </div>
       <style>{`
