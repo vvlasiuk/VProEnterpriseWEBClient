@@ -18,7 +18,8 @@ const authService = {
       if (data.access_token) {
         localStorage.setItem('token', data.access_token);
         // localStorage.setItem('username', username);
-        localStorage.setItem('lastUserId', data.user_id);  // Зберігаємо id користувача
+        console.log('lastUserId:', data.user._id);
+        localStorage.setItem('lastUserId', data.user._id);  // Зберігаємо id користувача
       }
       return data;
     } catch (error) {
@@ -47,7 +48,7 @@ const authService = {
       return await response.json();
     },
   getMe: async () => {
-    const response = await fetch(`${base_url}/api/v1/me`, {
+    const response = await fetch(`${base_url}/api/v1/auth/me`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }

@@ -61,7 +61,7 @@ const VPE = () => {
       <div style={{ padding: '16px' }}>
         {activeTabObj && getTabContent(activeTabObj)}
     </div>
-      <style jsx>{`
+      <style>{`
         .tab-item:hover {
         }
       `}</style>

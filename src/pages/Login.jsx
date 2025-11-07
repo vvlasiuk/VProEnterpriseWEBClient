@@ -13,6 +13,7 @@ const Login = () => {
     authService.getUsers().then(data => {
       setUsers(data.users);
       const lastUserId = localStorage.getItem('lastUserId');
+      console.log('Last user ID from localStorage:', lastUserId);
       if (lastUserId && data.users.some(u => u.id === lastUserId)) {
         setUsername(lastUserId);
       }
