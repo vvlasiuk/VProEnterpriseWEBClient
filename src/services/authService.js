@@ -46,7 +46,7 @@ const authService = {
       });
       if (!response.ok) throw new Error('Не вдалося отримати список користувачів');
       return await response.json();
-    },
+  },
   getMe: async () => {
     const response = await fetch(`${base_url}/api/v1/auth/me`, {
       headers: {
@@ -64,7 +64,19 @@ const authService = {
     });
     if (!response.ok) throw new Error('Token not valid');
     return response.json();
-}  
+  },
+  createUser: async (userData) => {
+    const response = await fetch(`${base_url}/api/v1/users/create_user`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      },
+      body: JSON.stringify(userData)
+    });
+    if (!response.ok) throw new Error('Не вдалося створити користувача');
+    return await response.json();
+  }  
 };
 
 export default authService;

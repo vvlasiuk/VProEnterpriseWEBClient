@@ -5,7 +5,7 @@ import UserComponent from '../components/UserComponent';
 import InfoTab from '../components/InfoTab';
 import HeaderPanel from '../components/HeaderPanel';
 import HeaderTabsPanel from '../components/HeaderTabsPanel';
-
+import UserFormComponent from '../components/UserFormComponent';
 
 const VPE = () => {
   const [showMenu, setShowMenu] = React.useState(false);
@@ -39,7 +39,9 @@ const VPE = () => {
     case 'openBrandsList':
       return <BrandsComponent />;
     case 'openUsersList':
-      return <UserComponent />;
+      return <UserComponent addTab={addTab} />;
+    case 'addUser':
+      return <UserFormComponent />;
     case 'openInfo':
       return <InfoTab />;
       // return <InfoTab username={username} />;
