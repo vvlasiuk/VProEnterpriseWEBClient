@@ -6,7 +6,10 @@ const HeaderPanel = ({ onMenuClick, onInfoClick }) => (
     display: 'flex',
     alignItems: 'center',
     padding: '1px 0px',
-    minHeight: '6px'
+    minHeight: '6px',
+    background: 'var(--color-bg-secondary)',
+    color: 'var(--color-header-text)',
+    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
   }}>
     <button onClick={onMenuClick}>menu</button>
     <div style={{

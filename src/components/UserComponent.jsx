@@ -15,6 +15,7 @@ const columns = [
 
 const UserComponent = ({ addTab }) => {
   const [users, setUsers] = useState([]);
+  const [rowSelection, setRowSelection] = useState({});
 
   useEffect(() => {
     authService.getUsers().then(data => setUsers(data.users));
@@ -37,12 +38,27 @@ const UserComponent = ({ addTab }) => {
     authService.getUsers().then(data => setUsers(data.users));
   };
 
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Insert') {
+        handleAddUser();
+      }
+      // Якщо потрібно для Enter:
+      // if (e.key === 'Enter') { handleAddUser(); }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [handleAddUser]);
+
   return (
     <div >
       <h1>Користувачі список</h1>
       <MaterialReactTable
         columns={columns}
         data={users}
+        enableRowSelection
+        onRowSelectionChange={setRowSelection}
+        state={{ rowSelection }}
         initialState={{ density: 'compact' }}
         renderTopToolbarCustomActions={() => (
           <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>

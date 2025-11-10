@@ -28,8 +28,8 @@ input, button, select.input {
 }
 
 button {
-  background: var(--color-accent);
-  color: #fff;
+  background: var(--color-bg-secondary);
+  color: var(--color-header-text);
   font-weight: bold;
   cursor: pointer;
   box-shadow: var(--box-shadow);
@@ -39,6 +39,7 @@ button {
 
 button:hover {
   background: var(--color-text);
+  color: #fff; /* або інший бажаний колір */
 }
 
 .form-block {
@@ -79,3 +80,41 @@ body, #root {
 .MuiTableCell-head {
   background-color: var(--color-bg-secondary) !important;
 }
+
+.Mui-selected, .MuiTableRow-root.Mui-selected {
+  background-color: var(--color-block) !important; /* або ваш бажаний колір */
+  color: var(--color-text-dark) !important;
+}
+
+.MuiTableCell-root:focus {
+  outline: 2px solid var(--color-accent) !important;
+  box-shadow: 0 0 0 2px var(--color-accent) !important;
+}
+
+.MuiTableCell-root:focus-visible {
+  outline: 2px solid var(--color-accent) !important;
+  box-shadow: 0 0 0 2px var(--color-accent) !important;
+}
+
+/* .MuiTableRow-root:focus-within {
+  background-color: var(--color-bg-secondary) !important;
+  color: var(--color-text-dark) !important;
+}
+ .MuiTableRow-root:focus-within,
+.MuiTableRow-hover:focus-within,
+tr.Mui-selected:focus-within {
+  background-color: var(--color-block) !important;
+  color: var(--color-text-dark) !important;
+}
+
+.MuiTableRow-root[aria-selected='true'],
+.MuiTableRow-root:focus-within {
+  background-color: var(--color-block) !important;
+  color: var(--color-text-dark) !important;
+} */
+
+/* .MuiTableRow-root:focus-within,
+.MuiTableRow-root[tabindex="0"] {
+  background-color: var(--color-block) !important;
+  color: var(--color-text-dark) !important;
+} */
