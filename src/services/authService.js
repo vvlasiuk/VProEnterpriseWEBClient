@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 
-const base_url = "http://192.168.0.158:8000";
+const base_url = process.env.REACT_APP_API_URL; //"http://192.168.0.158:8000";
 // const base_url = "http://localhost:8000";
 
 const authService = {
@@ -40,8 +40,8 @@ const authService = {
       const response = await fetch(`${base_url}/api/v1/users`, {
         method: 'GET',
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+          'Content-Type': 'application/json'
+          // 'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
       });
       if (!response.ok) throw new Error('Не вдалося отримати список користувачів');
@@ -62,8 +62,8 @@ const authService = {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }
     });
-    if (!response.ok) throw new Error('Token not valid');
-    return response.json();
+    // if (!response.ok) throw new Error('Token not valid');
+    return response.ok;
   },
   createUser: async (userData) => {
     const response = await fetch(`${base_url}/api/v1/users/create_user`, {

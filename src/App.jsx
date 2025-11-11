@@ -8,22 +8,22 @@ import './styles/theme_green.css';
 
 function App() {
   // БЕЗКІНЕЧНИЙ ПЕРЕВІРКИ ТОКЕНА - ВІДКЛЮЧЕНО ДЛЯ СПРОЩЕННЯ
-  // useEffect(() => {
-  //   const token = localStorage.getItem('token');
-  //   if (token) {
-  //     authService.checkToken()
-  //       .then(() => {
-  //         // токен валідний, нічого не робимо
-  //       })
-  //       .catch(() => {
-  //         // токен невалідний
-  //         localStorage.removeItem('token');
-  //         window.location.href = '/login';
-  //       });
-  //   } else {
-  //     window.location.href = '/login';
-  //   }
-  // }, []);
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      authService.checkToken()
+        .then(() => {
+          // токен валідний, нічого не робимо
+        })
+        .catch(() => {
+          // токен невалідний
+          localStorage.removeItem('token');
+          window.location.href = '/login';
+        });
+    } else {
+      // window.location.href = '/login';
+    }
+  }, []);
 
   return (
     <BrowserRouter>

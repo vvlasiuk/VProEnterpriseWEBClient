@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import authService from '../services/authService';
 
-const InfoTab = () => {
+const InfoTab = ({ addTab }) => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -30,14 +30,19 @@ const InfoTab = () => {
     window.location.href = '/login'; // або navigate('/login')
   };
 
+  const handleOpenDbAdmin = () => {
+    addTab({ title: 'Адміністрування БД', command: 'openDbAdmin' });
+  };
+
   return (
     <div>
       <div style={{ fontWeight: 'bold', marginBottom: '12px' }}>
         Користувач: {user ? user.full_name: '...'}
       </div>
-      <button onClick={handleLogout}>
-        log off
-      </button>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '10px' }}>
+        <button onClick={handleOpenDbAdmin}>Адміністрування бази даних</button>
+        <button onClick={handleLogout}>log off</button>
+      </div>
     </div>
   );
 };

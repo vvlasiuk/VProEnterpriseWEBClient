@@ -6,6 +6,7 @@ import InfoTab from '../components/InfoTab';
 import HeaderPanel from '../components/HeaderPanel';
 import HeaderTabsPanel from '../components/HeaderTabsPanel';
 import UserFormComponent from '../components/UserFormComponent';
+import DbAdminComponent from '../components/DbAdminComponent';
 
 const VPE = () => {
   const [showMenu, setShowMenu] = React.useState(false);
@@ -43,8 +44,9 @@ const VPE = () => {
     case 'addUser':
       return <UserFormComponent />;
     case 'openInfo':
-      return <InfoTab />;
-      // return <InfoTab username={username} />;
+      return <InfoTab addTab={addTab}/>;
+    case 'openDbAdmin':
+      return <DbAdminComponent/>;
     default:
       return null;
     } 
