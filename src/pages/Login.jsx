@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import authService from '../services/authService';
+import { checkServerStatus } from '../utils/checkServer';
+import ServerOffline from './ServerOffline';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -8,15 +10,32 @@ const Login = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
+  const [isServerOnline, setIsServerOnline] = useState(true);
 
   useEffect(() => {
-    authService.getUsers().then(data => {
-      setUsers(data.users);
-      const lastUserId = localStorage.getItem('lastUserId');
-      if (lastUserId && data.users.some(u => String(u.id) === lastUserId)) {
-        setUsername(lastUserId);
-      }
-        });
+    checkServer();
+  }, []);
+
+  const checkServer = async () => {
+    const online = await checkServerStatus('/api/health');
+    setIsServerOnline(online);
+  };
+
+  useEffect(() => {
+    authService.getUsers()
+      .then(data => {
+        setUsers(data.users);
+        const lastUserId = localStorage.getItem('lastUserId');
+        if (lastUserId && data.users.some(u => String(u.id) === lastUserId)) {
+          setUsername(lastUserId);
+        }
+      })
+      .catch(error => {
+        // Тут обробляється таймаут або відсутність підключення
+        setUsers([]);
+        setError('Сервер недоступний або таймаут');
+        setIsServerOnline(false); // якщо потрібно показати ServerOffline
+      });
   }, []);
 
   const handleSubmit = async (e) => {
@@ -32,6 +51,10 @@ const Login = () => {
 
   const labelStyle = { fontWeight: 'bold', margin: 0, width: '100px', flexShrink: 0 };
   const inputStyle = { width: '100%', minWidth: '120px', maxWidth: '220px' };
+
+  if (!isServerOnline) {
+    return <ServerOffline onRetry={checkServer} />;
+  }
 
   return (
     <div style={{

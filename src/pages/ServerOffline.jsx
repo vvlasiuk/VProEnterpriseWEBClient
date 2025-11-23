@@ -10,4 +10,3 @@ const ServerOffline = ({ onRetry }) => (
 
 export default ServerOffline;
 
-// СУПЕР
