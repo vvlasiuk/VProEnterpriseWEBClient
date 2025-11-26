@@ -1,11 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 
 const base_url = process.env.REACT_APP_API_URL; //"http://192.168.0.158:8000";
-// const base_url = "http://localhost:8000";
 
 const authService = {
   login: async (username, password) => {
-    const login_url = `${base_url}/api/v1/auth/login`;
+    const login_url = `${base_url}/auth/login`;
     try {
       const response = await fetch(login_url, {
         method: 'POST',
@@ -28,7 +27,7 @@ const authService = {
     }
   },
   logout: async () => {
-    await fetch(`${base_url}/api/v1/auth/logout`, {
+    await fetch(`${base_url}/auth/logout`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -37,7 +36,7 @@ const authService = {
     });
   },
   getUsers: async () => {
-      const response = await fetch(`${base_url}/api/v1/users`, {
+      const response = await fetch(`${base_url}/users`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'
@@ -48,7 +47,7 @@ const authService = {
       return await response.json();
   },
   getMe: async () => {
-    const response = await fetch(`${base_url}/api/v1/auth/me`, {
+    const response = await fetch(`${base_url}/auth/me`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }
@@ -57,7 +56,7 @@ const authService = {
     return response.json();
   },
   checkToken: async () => {
-    const response = await fetch(`${base_url}/api/v1/auth/protected`, {
+    const response = await fetch(`${base_url}/auth/protected`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }
@@ -66,7 +65,7 @@ const authService = {
     return response.ok;
   },
   createUser: async (userData) => {
-    const response = await fetch(`${base_url}/api/v1/users/create_user`, {
+    const response = await fetch(`${base_url}/users/create_user`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

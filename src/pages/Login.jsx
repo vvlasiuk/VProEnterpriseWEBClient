@@ -17,7 +17,7 @@ const Login = () => {
   }, []);
 
   const checkServer = async () => {
-    const online = await checkServerStatus('/api/health');
+    const online = await checkServerStatus(`${process.env.REACT_APP_API_URL}/health`);
     setIsServerOnline(online);
   };
 
