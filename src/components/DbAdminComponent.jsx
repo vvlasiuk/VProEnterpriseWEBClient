@@ -1,14 +1,34 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { checkDbEmptyStatus } from '../utils/checkServer';
 
 const DbAdminComponent = () => {
-  const handleClearDb = () => {
-    // тут логіка очищення бази (API-запит)
+  const [isDbEmpty, setIsDbEmpty] = useState(false);
+
+  useEffect(() => {
+    const fetchDbStatus = async () => {
+      const dbEmpty = await checkDbEmptyStatus(`${process.env.REACT_APP_API_URL}/health/db_empty`);
+      setIsDbEmpty(dbEmpty);
+    };
+    fetchDbStatus();
+  }, []);
+
+  const handleCreateDb = () => {
+    console.log('Creating database tables...');
+    // тут логіка створення таблиць бази даних (API-запит)
+  };
+
+  const handleDropDb = () => {
+    console.log('Dropping database tables...');
+    // тут логіка видалення таблиць бази даних (API-запит)
   };
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '10px' }}>
-      <button onClick={handleClearDb}>Очистити базу даних</button>
-      {/* Додавайте інші кнопки тут, якщо потрібно */}
+      <h2 style={{ textAlign: 'center', marginBottom: '24px' }}>
+        Адміністрування бази даних
+      </h2>
+      <button onClick={handleDropDb} disabled={isDbEmpty}>Видалити таблиці бази даних</button>
+      <button onClick={handleCreateDb} disabled={!isDbEmpty}>Створити таблиці бази даних</button>
     </div>
   );
 };

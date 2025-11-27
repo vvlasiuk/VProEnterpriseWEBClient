@@ -43,6 +43,14 @@ button:hover {
   color: #fff; /* або інший бажаний колір */
 }
 
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  /* Можна додати фон, рамку, колір тексту */
+  background-color: #e0e0e0;
+  color: #888;
+}
+
 .form-block {
   background: var(--color-block);
   box-shadow: var(--box-shadow);

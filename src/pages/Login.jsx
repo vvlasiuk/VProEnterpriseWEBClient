@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import authService from '../services/authService';
 import { checkServerStatus } from '../utils/checkServer';
 import ServerOffline from './ServerOffline';
+import { checkDbEmptyStatus } from '../utils/checkServer';
+import DbAdminComponent from '../components/DbAdminComponent';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -11,6 +13,7 @@ const Login = () => {
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
   const [isServerOnline, setIsServerOnline] = useState(true);
+  const [isDbEmpty, setIsDbEmpty] = useState(false);
 
   useEffect(() => {
     checkServer();
@@ -19,6 +22,10 @@ const Login = () => {
   const checkServer = async () => {
     const online = await checkServerStatus(`${process.env.REACT_APP_API_URL}/health`);
     setIsServerOnline(online);
+    if (online) {
+      const dbEmpty = await checkDbEmptyStatus(`${process.env.REACT_APP_API_URL}/health/db_empty`);
+      setIsDbEmpty(dbEmpty);
+    }
   };
 
   useEffect(() => {
@@ -54,6 +61,9 @@ const Login = () => {
 
   if (!isServerOnline) {
     return <ServerOffline onRetry={checkServer} />;
+  }
+  if (isDbEmpty) {
+    return <DbAdminComponent />;
   }
 
   return (

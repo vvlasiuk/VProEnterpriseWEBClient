@@ -14,3 +14,14 @@ export async function checkServerStatus(url = '/') {
     return false;
   }
 }
+
+export async function checkDbEmptyStatus(url) {
+  try {
+    const response = await fetch(url, { method: 'GET' });
+    if (!response.ok) return false;
+    const data = await response.json();
+    return data.db_empty === true;
+  } catch (error) {
+    return false;
+  }
+}
