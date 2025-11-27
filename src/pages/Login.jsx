@@ -20,7 +20,7 @@ const Login = () => {
   }, []);
 
   const checkServer = async () => {
-    const online = await checkServerStatus(`${process.env.REACT_APP_API_URL}/health`);
+    const online = await checkServerStatus(`${process.env.REACT_APP_API_URL}/health/db`);
     setIsServerOnline(online);
     if (online) {
       const dbEmpty = await checkDbEmptyStatus(`${process.env.REACT_APP_API_URL}/health/db_empty`);

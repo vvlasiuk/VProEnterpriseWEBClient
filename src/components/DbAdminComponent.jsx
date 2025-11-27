@@ -12,9 +12,20 @@ const DbAdminComponent = () => {
     fetchDbStatus();
   }, []);
 
-  const handleCreateDb = () => {
-    console.log('Creating database tables...');
-    // тут логіка створення таблиць бази даних (API-запит)
+  const handleCreateDb = async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/health/db_create_table`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+      });
+      if (response.ok) {
+        // Таблиці створено успішно
+      } else {
+        // Помилка створення таблиць
+      }
+    } catch (error) {
+      // Обробка помилки мережі
+    }
   };
 
   const handleDropDb = () => {
