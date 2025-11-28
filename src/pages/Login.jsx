@@ -33,15 +33,15 @@ const Login = () => {
       .then(data => {
         setUsers(data.users);
         const lastUserId = localStorage.getItem('lastUserId');
+
         if (lastUserId && data.users.some(u => String(u.id) === lastUserId)) {
           setUsername(lastUserId);
         }
       })
       .catch(error => {
-        // Тут обробляється таймаут або відсутність підключення
         setUsers([]);
         setError('Сервер недоступний або таймаут');
-        setIsServerOnline(false); // якщо потрібно показати ServerOffline
+        setIsServerOnline(false);
       });
   }, []);
 
@@ -97,11 +97,13 @@ const Login = () => {
             name="username"
             autoComplete="username"
             value={username}
-            onChange={e => setUsername(e.target.value)}
+            onChange={e => {
+              setUsername(e.target.value);
+            }}
             className="input"
             style={inputStyle}
           >
-            {/* <option value="">Оберіть користувача</option> */}
+            <option value="">Оберіть користувача</option>
             {Array.isArray(users) && users
               .filter(user => user.id && user.name)
               .map(user => (
