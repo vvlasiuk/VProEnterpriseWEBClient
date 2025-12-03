@@ -33,7 +33,7 @@ const BrandsComponent = ({ addTab }) => {
         initialState={{ density: 'compact' }}
         renderTopToolbarCustomActions={() => (
           <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-            <IconButton onClick={handleAddUser} title="Додати">
+            {/* <IconButton onClick={handleAddUser} title="Додати">
               <AddIcon />
             </IconButton>
             <IconButton onClick={handleEditUser} title="Редагувати">
@@ -44,7 +44,7 @@ const BrandsComponent = ({ addTab }) => {
             </IconButton>
             <IconButton onClick={handleRefresh} title="Оновити">
               <RefreshIcon />
-            </IconButton>
+            </IconButton> */}
           </div>
         )}
       />

@@ -5,7 +5,7 @@ const base_url = process.env.REACT_APP_API_URL;
 const catalogService = {
 
   getBrands: async () => {
-      const response = await fetch(`${base_url}/("/catalog/cat_products_brands`, {
+      const response = await fetch(`${base_url}/catalog?model_name=cat_products_brands`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
