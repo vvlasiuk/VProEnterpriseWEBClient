@@ -8,18 +8,26 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 const columns = [
-  { accessorKey: 'id', header: 'ID' },
+  { accessorKey: '_id', header: 'ID' },
   { accessorKey: 'name', header: "Ім'я" },
   { accessorKey: 'full_name', header: "Повне ім'я" },
 ];
 
 const BrandsComponent = ({ addTab }) => {
   const [brands, setBrands] = useState([]);
-  const [rowSelection, setRowSelection] = useState({});
+  const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 50 });
+  const [total, setTotal] = useState(0);
+  // const [rowSelection, setRowSelection] = useState({});
 
   useEffect(() => {
-    catalogService.getBrands().then(data => setBrands(data.brands));
-  }, []);
+    const skip = pagination.pageIndex * pagination.pageSize;
+    catalogService.getBrands(skip, pagination.pageSize)
+      .then(response => {
+        setBrands(response.data);
+        setTotal(response.total);
+      })
+      .catch(error => console.error('Помилка:', error));
+  }, [pagination.pageIndex, pagination.pageSize]);
 
   return( 
     <div >
@@ -27,9 +35,10 @@ const BrandsComponent = ({ addTab }) => {
       <MaterialReactTable
         columns={columns}
         data={brands}
-        enableRowSelection
-        onRowSelectionChange={setRowSelection}
-        state={{ rowSelection }}
+        manualPagination
+        rowCount={total}
+        state={{ pagination }}
+        onPaginationChange={setPagination}
         initialState={{ density: 'compact' }}
         renderTopToolbarCustomActions={() => (
           <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
