@@ -15,7 +15,29 @@ const catalogService = {
       );
       if (!response.ok) throw new Error('Не вдалося отримати список брендів');
       return await response.json();
-  }
+  },
+
+uploadExcelFile: async (file, importType = '', sourceId = 1, batchSize = 100) => {
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('import_type', importType);
+  formData.append('source_id', sourceId);
+  formData.append('batch_size', batchSize);
+  
+  // console.log('Параметри:', { file: file.name, importType: 'brands', sourceId: 1 });
+  
+  const response = await fetch(`${base_url}/import/excel`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    },
+    body: formData
+  });
+  
+  if (!response.ok) throw new Error('Помилка завантаження файлу');
+  return await response.json();
+}  
+
 };
 
 export default catalogService;
