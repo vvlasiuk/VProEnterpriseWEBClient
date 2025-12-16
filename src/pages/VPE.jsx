@@ -7,6 +7,7 @@ import HeaderPanel from '../components/HeaderPanel';
 import HeaderTabsPanel from '../components/HeaderTabsPanel';
 import UserFormComponent from '../components/UserFormComponent';
 import DbAdminComponent from '../components/DbAdminComponent';
+import ModelSchemasComponent from '../components/configurator/ModelSchemasComponent';
 
 const VPE = () => {
   const [showMenu, setShowMenu] = React.useState(false);
@@ -47,6 +48,8 @@ const VPE = () => {
       return <InfoTab addTab={addTab}/>;
     case 'openDbAdmin':
       return <DbAdminComponent/>;
+    case 'openModelSchemas':
+      return <ModelSchemasComponent />;
     default:
       return null;
     } 

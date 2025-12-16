@@ -34,6 +34,10 @@ const InfoTab = ({ addTab }) => {
     addTab({ title: 'Адміністрування БД', command: 'openDbAdmin' });
   };
 
+  const handleOpenModelSchemas = () => {
+    addTab({ title: 'Схема БД (моделі)', command: 'openModelSchemas' });
+  };
+
   return (
     <div>
       <div style={{ fontWeight: 'bold', marginBottom: '12px' }}>
@@ -41,6 +45,7 @@ const InfoTab = ({ addTab }) => {
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '10px' }}>
         <button onClick={handleOpenDbAdmin}>Адміністрування бази даних</button>
+        <button onClick={handleOpenModelSchemas}>Схема БД (моделі)</button>
         <button onClick={handleLogout}>log off</button>
       </div>
     </div>
