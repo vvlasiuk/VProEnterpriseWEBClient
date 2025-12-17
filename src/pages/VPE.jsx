@@ -8,6 +8,8 @@ import HeaderTabsPanel from '../components/HeaderTabsPanel';
 import UserFormComponent from '../components/UserFormComponent';
 import DbAdminComponent from '../components/DbAdminComponent';
 import ModelSchemasComponent from '../components/configurator/ModelSchemasComponent';
+import DataBaseSchemasComponent from '../components/configurator/DataBaseSchemasComponent';
+import CompareSchemasComponent from '../components/configurator/CompareSchemasComponent';
 
 const VPE = () => {
   const [showMenu, setShowMenu] = React.useState(false);
@@ -50,6 +52,10 @@ const VPE = () => {
       return <DbAdminComponent/>;
     case 'openModelSchemas':
       return <ModelSchemasComponent />;
+    case 'openDataBaseSchemas':
+      return <DataBaseSchemasComponent />;
+    case 'openCompareSchemas':
+      return <CompareSchemasComponent/>;  
     default:
       return null;
     } 

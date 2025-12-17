@@ -38,6 +38,14 @@ const InfoTab = ({ addTab }) => {
     addTab({ title: 'Схема БД (моделі)', command: 'openModelSchemas' });
   };
 
+  const handleOpenDataBaseSchemas = () => {
+    addTab({ title: 'Схема БД (база даних)', command: 'openDataBaseSchemas' });
+  }; 
+
+  const handleOpenCompareSchemas = () => {
+    addTab({ title: 'Схема БД (відмінність)', command: 'openCompareSchemas' });
+  };
+
   return (
     <div>
       <div style={{ fontWeight: 'bold', marginBottom: '12px' }}>
@@ -46,6 +54,8 @@ const InfoTab = ({ addTab }) => {
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '10px' }}>
         <button onClick={handleOpenDbAdmin}>Адміністрування бази даних</button>
         <button onClick={handleOpenModelSchemas}>Схема БД (моделі)</button>
+        <button onClick={handleOpenDataBaseSchemas}>Схема БД (база даних)</button>
+        <button onClick={handleOpenCompareSchemas}>Схема БД (відмінність)</button>
         <button onClick={handleLogout}>log off</button>
       </div>
     </div>
