@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { checkDbEmptyStatus } from '../utils/checkServer';
+import { checkDbEmptyStatus } from '../../utils/checkServer';
 
-const DbAdminComponent = () => {
+const DbAdminComponent = ({ addTab }) => {
   const [isDbEmpty, setIsDbEmpty] = useState(false);
 
   useEffect(() => {
@@ -53,7 +53,8 @@ const DbAdminComponent = () => {
   }
 
   const handleManageDb = () => {
-  };
+     addTab({ title: 'Структура БД', command: 'openManageDb' });
+ };
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '10px' }}>

@@ -4,7 +4,7 @@ import authService from '../services/authService';
 import { checkServerStatus } from '../utils/checkServer';
 import ServerOffline from './ServerOffline';
 import { checkDbEmptyStatus } from '../utils/checkServer';
-import DbAdminComponent from '../components/DbAdminComponent';
+import DbAdminComponent from '../components/configurator/DbAdminComponent';
 
 const Login = () => {
   const [username, setUsername] = useState('');

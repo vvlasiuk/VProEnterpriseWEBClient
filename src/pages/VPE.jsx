@@ -6,10 +6,11 @@ import InfoTab from '../components/InfoTab';
 import HeaderPanel from '../components/HeaderPanel';
 import HeaderTabsPanel from '../components/HeaderTabsPanel';
 import UserFormComponent from '../components/UserFormComponent';
-import DbAdminComponent from '../components/DbAdminComponent';
+import DbAdminComponent from '../components/configurator/DbAdminComponent';
 import ModelSchemasComponent from '../components/configurator/ModelSchemasComponent';
 import DataBaseSchemasComponent from '../components/configurator/DataBaseSchemasComponent';
 import CompareSchemasComponent from '../components/configurator/CompareSchemasComponent';
+import ManageDbStructureComponent from '../components/configurator/ManageDbStructureComponent';
 
 const VPE = () => {
   const [showMenu, setShowMenu] = React.useState(false);
@@ -49,13 +50,15 @@ const VPE = () => {
     case 'openInfo':
       return <InfoTab addTab={addTab}/>;
     case 'openDBA':
-      return <DbAdminComponent/>;
+      return <DbAdminComponent addTab={addTab} />;
     case 'openModelSchemas':
       return <ModelSchemasComponent />;
     case 'openDataBaseSchemas':
       return <DataBaseSchemasComponent />;
     case 'openCompareSchemas':
       return <CompareSchemasComponent/>;  
+    case 'openManageDb':
+      return <ManageDbStructureComponent/>;  
     default:
       return null;
     } 
