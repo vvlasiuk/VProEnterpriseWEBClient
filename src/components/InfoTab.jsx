@@ -30,8 +30,8 @@ const InfoTab = ({ addTab }) => {
     window.location.href = '/login'; // або navigate('/login')
   };
 
-  const handleOpenDbAdmin = () => {
-    addTab({ title: 'Адміністрування БД', command: 'openDbAdmin' });
+  const handleOpenDBA = () => {
+    addTab({ title: 'Адміністрування БД', command: 'openDBA' });
   };
 
   const handleOpenModelSchemas = () => {
@@ -52,7 +52,7 @@ const InfoTab = ({ addTab }) => {
         Користувач: {user ? user.full_name: '...'}
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '10px' }}>
-        <button onClick={handleOpenDbAdmin}>Адміністрування бази даних</button>
+        <button onClick={handleOpenDBA}>Адміністрування бази даних</button>
         <button onClick={handleOpenModelSchemas}>Схема БД (моделі)</button>
         <button onClick={handleOpenDataBaseSchemas}>Схема БД (база даних)</button>
         <button onClick={handleOpenCompareSchemas}>Схема БД (відмінність)</button>

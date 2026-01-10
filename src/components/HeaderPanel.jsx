@@ -19,7 +19,7 @@ const HeaderPanel = ({ onMenuClick, onInfoClick }) => (
     }}>
       VLAS PRO Enterprise
     </div>
-    <button onClick={onInfoClick}>info</button>
+    <button onClick={onInfoClick}>VPE</button>
   </div>
 );
 

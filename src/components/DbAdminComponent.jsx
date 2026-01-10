@@ -52,12 +52,16 @@ const DbAdminComponent = () => {
     }
   }
 
+  const handleManageDb = () => {
+  };
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '10px' }}>
       <h2 style={{ textAlign: 'center', marginBottom: '24px' }}>
         Адміністрування бази даних
       </h2>
-      <button onClick={handleCreateDb} disabled={!isDbEmpty}>Створити таблиці бази даних</button>
+      <button onClick={handleManageDb}>Управління структурою бази даних</button>
+      {/* <button onClick={handleCreateDb} disabled={!isDbEmpty}>Створити таблиці бази даних</button> */}
       <button onClick={handleDropDb} disabled={isDbEmpty}>Видалити таблиці бази даних</button>
       <button onClick={handleUpdateDb} disabled={isDbEmpty}>Оновити таблиці бази даних</button>
     </div>

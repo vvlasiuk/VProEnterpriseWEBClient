@@ -48,7 +48,7 @@ const VPE = () => {
       return <UserFormComponent />;
     case 'openInfo':
       return <InfoTab addTab={addTab}/>;
-    case 'openDbAdmin':
+    case 'openDBA':
       return <DbAdminComponent/>;
     case 'openModelSchemas':
       return <ModelSchemasComponent />;
@@ -65,7 +65,7 @@ const VPE = () => {
     <div>
       <HeaderPanel
         onMenuClick={() => setShowMenu(true)}
-        onInfoClick={() => addTab({ title: 'Інфо', command: 'openInfo' })}
+        onInfoClick={() => addTab({ title: 'VPE', command: 'openInfo' })}
       />
     <HeaderTabsPanel
       tabs={tabs}
