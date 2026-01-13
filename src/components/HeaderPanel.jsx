@@ -11,7 +11,7 @@ const HeaderPanel = ({ onMenuClick, onInfoClick }) => (
     color: 'var(--color-header-text)',
     boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
   }}>
-    <button onClick={onMenuClick}>menu</button>
+    <button onClick={onMenuClick}>☰</button>
     <div style={{
       margin: '0 auto',
       fontWeight: 'bold',

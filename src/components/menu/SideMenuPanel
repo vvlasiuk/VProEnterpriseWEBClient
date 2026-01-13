@@ -1,0 +1,77 @@
+// src/components/SideMenuPanel.jsx
+import React from 'react';
+
+const SideMenuPanel = ({ 
+  items = [],                    // Масив пунктів меню
+  activeItem,                    // ID активного пункту
+  onItemClick,                   // Callback при кліку на пункт
+  isOpen = false,                // Стан відкрито/закрито
+  onClose,                       // Callback для закриття
+  width = '200px',               // Ширина панелі
+  position = 'left',             // 'left' або 'right'
+  closeOnItemClick = true,       // Закривати при кліку на пункт
+  showBackdrop = false,          // Показувати затемнення
+  className = '',                // Додатковий CSS клас
+  style = {}                     // Додаткові стилі
+}) => {
+  
+  const handleItemClick = (itemId) => {
+    if (onItemClick) {
+      onItemClick(itemId);
+    }
+    if (closeOnItemClick && onClose) {
+      onClose();
+    }
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <>
+      {/* Backdrop (затемнення) */}
+      {showBackdrop && (
+        <div 
+          onClick={onClose}
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            zIndex: 8
+          }}
+        />
+      )}
+
+      {/* Панель меню */}
+      <div 
+        className={`vertical-tabs-container ${className}`}
+        style={{ 
+          position: 'absolute',
+          [position]: 0,
+          top: 0,
+          height: '100%',
+          width: width,
+          zIndex: 9,
+          transition: 'transform 0.3s ease',
+          ...style
+        }}
+      >
+        {items.map(item => (
+          <div
+            key={item.id}
+            className={`vertical-tab ${activeItem === item.id ? 'active' : ''}`}
+            onClick={() => handleItemClick(item.id)}
+            style={item.style || {}}
+          >
+            {item.icon && <span style={{ marginRight: '8px' }}>{item.icon}</span>}
+            {item.label}
+          </div>
+        ))}
+      </div>
+    </>
+  );
+};
+
+export default SideMenuPanel;

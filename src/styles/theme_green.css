@@ -42,7 +42,7 @@
   flex-direction: column;
   gap: 4px;
   padding: 10px;
-  margin-right: 10px;
+  /* margin-right: 10px; */
   min-width: 180px;
 }
 /* --- Вертикальні закладки  */

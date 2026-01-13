@@ -4,8 +4,18 @@ const HeaderTabsPanel = ({ tabs, activeTab, setActiveTab, setTabs }) => (
   <div style={{
     display: 'flex',
     alignItems: 'center',
-    padding: '4px 12px',
-    minHeight: '28px'
+    padding: '4px 0',  // Прибрати горизонтальний padding
+    paddingLeft: '12px',  // І додати тільки лівий
+    minHeight: '28px',
+    overflowX: 'auto',           // Додаємо горизонтальне прокручування
+    overflowY: 'hidden',          // Блокуємо вертикальне прокручування
+    flexWrap: 'nowrap',           // Забороняємо перенесення табів на новий рядок
+    maxWidth: '100vw',            // Обмежуємо ширину екраном
+    WebkitOverflowScrolling: 'touch', // Плавне прокручування на iOS
+    scrollBehavior: 'smooth',     // Плавна анімація прокручування
+    // Приховування scrollbar (опціонально)
+    scrollbarWidth: 'none',       // Firefox
+    msOverflowStyle: 'none',      // IE/Edge
   }}>
     {tabs.map(tab => (
       <div
@@ -19,7 +29,10 @@ const HeaderTabsPanel = ({ tabs, activeTab, setActiveTab, setTabs }) => (
           border: activeTab === tab.title ? '1px solid #ffd600' : '1px solid #e0e0e0',
           fontWeight: activeTab === tab.title ? 'bold' : 'normal',
           cursor: 'pointer',
-          position: 'relative'
+          position: 'relative',
+          flexShrink: 0,             // Запобігаємо стисканню табів
+          whiteSpace: 'nowrap',      // Текст не переноситься
+          boxSizing: 'border-box',  // Додати це
         }}
       >
         <span onClick={() => setActiveTab(tab.title)} style={{ marginRight: '8px' }}>
