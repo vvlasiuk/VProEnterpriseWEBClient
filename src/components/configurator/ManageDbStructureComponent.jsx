@@ -24,6 +24,24 @@ const ManageDbStructureComponent = () => {
     { id: 'v2', label: 'Версія 2', icon: '2️⃣' }
   ];
 
+ const versionParams = {
+  filters: [
+    { id: 'all', label: 'Всі', icon: '🔧' },
+  //   { id: 'updated', label: 'Оновлені', icon: '✅' },
+  //   { id: 'not_updated', label: 'Не оновлені', icon: '⚠️' }
+  ],
+      sort: {
+      // active: 'name',
+      // options: [
+        // { id: 'name', label: 'За назвою', icon: '🔤' },
+        // { id: 'date', label: 'За датою', icon: '📅' }
+      // ]
+    },
+    actions: [
+    // { id: 'update', label: 'Оновити', icon: '⬆️' },
+    // { id: 'compare', label: 'Порівняти', icon: '⚖️' }
+  ]
+}; 
   const versionParametrsItems = [
     { id: 'version_not_updated', label: 'Не оновлені', icon: '⚙️' },
     { id: 'version_all', label: 'Всі', icon: '🔧' },
@@ -89,6 +107,7 @@ const ManageDbStructureComponent = () => {
 
         <SideMenuPanel
           items={versionItems}
+          params={versionParams}
           activeItem={selectedVersion}
           onItemClick={setSelectedVersion}
           isOpen={showVersionsMenu}
