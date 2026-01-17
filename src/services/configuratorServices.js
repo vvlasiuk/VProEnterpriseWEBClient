@@ -27,7 +27,17 @@ const configuratorServices = {
     });
     if (!response.ok) throw new Error('Не вдалося отримати порівняння схем');
     return await response.json();
-  }
+  },
+  getDBStructureVersions: async (section) => {
+    // const response = await fetch(`${base_url}/configurator/models_schemas?section=${section}`, {
+    const response = await fetch(`${base_url}/configurator/sys_structure_versions_lists`, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+    if (!response.ok) throw new Error('Не вдалося отримати версії структури');
+    return await response.json();
+  }  
 };
 
 export default configuratorServices;

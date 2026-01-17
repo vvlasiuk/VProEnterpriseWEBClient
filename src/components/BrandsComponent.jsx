@@ -14,8 +14,6 @@ const columns = [
   { accessorKey: 'full_name', header: "Повне ім'я" },
 ];
 
-
-
 const BrandsComponent = ({ addTab }) => {
   const [brands, setBrands] = useState([]);
   const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 50 });
@@ -26,52 +24,60 @@ const BrandsComponent = ({ addTab }) => {
     const skip = pagination.pageIndex * pagination.pageSize;
     catalogService.getBrands(skip, pagination.pageSize)
       .then(response => {
-        setBrands(response.data);
-        setTotal(response.total);
+        // Захист від undefined/null - завжди використовуємо масив
+        setBrands(response?.data || []);
+        setTotal(response?.total || 0);
       })
-      .catch(error => console.error('Помилка:', error));
+      .catch(error => {
+        console.error('Помилка:', error);
+        // У разі помилки встановлюємо порожній масив
+        setBrands([]);
+        setTotal(0);
+      });
   };
 
   useEffect(() => {
     const skip = pagination.pageIndex * pagination.pageSize;
     catalogService.getBrands(skip, pagination.pageSize)
       .then(response => {
-        setBrands(response.data);
-        setTotal(response.total);
+        // Захист від undefined/null - завжди використовуємо масив
+        setBrands(response?.data || []);
+        setTotal(response?.total || 0);
       })
-      .catch(error => console.error('Помилка:', error));
+      .catch(error => {
+        console.error('Помилка:', error);
+        // У разі помилки встановлюємо порожній масив
+        setBrands([]);
+        setTotal(0);
+      });
   }, [pagination.pageIndex, pagination.pageSize]);
 
   const handleUploadClick = () => {
-    // console.log('Кнопка натиснута');
     fileInputRef.current.click();
   };
 
   const handleFileChange = async (e) => {
-    // console.log('Файл вибрано, event:', e);
     const file = e.target.files[0];
-    // console.log('Файл:', file);
     if (!file) return;
     
     try {
       await catalogService.uploadExcelFile(file, 'products_brands_import');
       alert('Файл успішно завантажено');
-      handleRefresh(); // Оновити список
+      handleRefresh();
     } catch (error) {
       console.error('Помилка:', error);
       alert('Помилка завантаження файлу');
     }
 
-     e.target.value = '';
-
+    e.target.value = '';
   };
 
   return( 
-    <div >
+    <div>
       <h1>Список брендів</h1>
       <MaterialReactTable
         columns={columns}
-        data={brands}
+        data={brands}  // Завжди буде масив, навіть якщо порожній
         manualPagination
         rowCount={total}
         state={{ pagination }}
@@ -93,9 +99,10 @@ const BrandsComponent = ({ addTab }) => {
         ref={fileInputRef}
         style={{ display: 'none' }}
         onChange={handleFileChange}
-        accept=".xlsx,.csv" // опціонально — обмежте типи файлів
+        accept=".xlsx,.csv"
       />
     </div>
   );
 };
+
 export default BrandsComponent;

@@ -1,15 +1,17 @@
 // src/components/configurator/ManageDbStructureComponent.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SideMenuPanel from '../menu/SideMenuPanel';
 import MenuBar from '../menu/MenuBar';
 import MenuButton from '../menu/MenuButton';
+import configuratorServices from '../../services/configuratorServices';
 
 const ManageDbStructureComponent = () => {
   const [activeSection, setActiveSection] = useState('info');
   const [showTabs, setShowTabs] = useState(false);
   const [showVersionsMenu, setShowVersionsMenu] = useState(false);  // Новий state
-  const [showVersionParamsMenu, setShowVersionParamsMenu] = useState(false); // Новий state
-  const [selectedVersion, setSelectedVersion] = useState('v1');
+  const [versionItems, setVersionItems] = useState([]);
+  const [selectedVersion, setSelectedVersion] = useState(null);
+  const [isLoadingVersions, setIsLoadingVersions] = useState(false);
 
   // Конфігурація основного меню
   const menuItems = [
@@ -18,39 +20,66 @@ const ManageDbStructureComponent = () => {
     { id: 'sys_structure', label: 'Платформа', icon: '⚙️' }
   ];
 
-  // Конфігурація меню версій
-  const versionItems = [
-    { id: 'v1', label: 'Версія 1', icon: '1️⃣' },
-    { id: 'v2', label: 'Версія 2', icon: '2️⃣' }
-  ];
+  // // Конфігурація меню версій
+  // const versionItems = [
+  //   { id: 'v1', label: 'Версія 1', icon: '1️⃣' },
+  //   { id: 'v2', label: 'Версія 2', icon: '2️⃣' }
+  // ];
 
+//  const [versionItems, setVersionItems] = useState([]);
+
+ 
  const versionParams = {
-  filters: [
-    { id: 'all', label: 'Всі', icon: '🔧' },
-  //   { id: 'updated', label: 'Оновлені', icon: '✅' },
-  //   { id: 'not_updated', label: 'Не оновлені', icon: '⚠️' }
-  ],
-      sort: {
-      // active: 'name',
-      // options: [
-        // { id: 'name', label: 'За назвою', icon: '🔤' },
-        // { id: 'date', label: 'За датою', icon: '📅' }
-      // ]
-    },
     actions: [
-    // { id: 'update', label: 'Оновити', icon: '⬆️' },
-    // { id: 'compare', label: 'Порівняти', icon: '⚖️' }
+    { id: 'version_settings', label: 'Налаштування', icon: '⚙️' },
   ]
 }; 
-  const versionParametrsItems = [
-    { id: 'version_not_updated', label: 'Не оновлені', icon: '⚙️' },
-    { id: 'version_all', label: 'Всі', icon: '🔧' },
-    { id: 'version__updated', label: 'Оновлені', icon: '⚙️' }
-  ];
   // Знайти активний пункт меню
   const activeMenuItem = menuItems.find(item => item.id === activeSection);
   // Знайти обрану версію
   const activeVersionItem = versionItems.find(item => item.id === selectedVersion);
+
+  useEffect(() => {
+    const sectionsWithVersions = ['app_structure', 'sys_structure'];
+    
+    if (sectionsWithVersions.includes(activeSection)) {
+      loadVersions(activeSection);
+    }
+  }, [activeSection]);
+
+  const loadVersions = async (section) => {
+    setIsLoadingVersions(true);
+    try {
+      const response = await configuratorServices.getDBStructureVersions(section);
+      
+      // Обробка нової структури відповіді
+      const versions = (response?.schemas || []).map((schema, index) => ({
+        id: schema.folder_name || `v${index + 1}`,
+        label: `${schema.version}${schema.updated ? '  ✔️' : ' ➖'}`,
+        icon: `📋`,
+        metadata: {
+          version: schema.version,
+          date: schema.version_date,
+          title: schema.title,
+          author: schema.author,
+          type: schema.type_database_schemas,
+          folderName: schema.folder_name
+        }
+      }));
+      
+      setVersionItems(versions);
+      
+      if (!selectedVersion && versions.length > 0) {
+        setSelectedVersion(versions[0].id);
+      }
+      
+    } catch (error) {
+      console.error('Помилка завантаження версій:', error);
+      setVersionItems([]);
+    } finally {
+      setIsLoadingVersions(false);
+    }
+  };
 
   const renderContent = () => {
     switch (activeSection) {
@@ -78,20 +107,10 @@ const ManageDbStructureComponent = () => {
           ☰ {activeMenuItem?.icon} {activeMenuItem?.label}
         </MenuButton>
         
-        {sectionsWithVersions.includes(activeSection) && (
-          <>
-            <MenuButton 
-              onClick={() => setShowVersionsMenu(!showVersionsMenu)}
-            >
-              ☰ {activeVersionItem?.icon} {activeVersionItem?.label}
-            </MenuButton>
-            
-            <MenuButton 
-              onClick={() => setShowVersionParamsMenu(!showVersionParamsMenu)}
-            >
-              ⚒︎
-            </MenuButton>
-          </>
+        {sectionsWithVersions.includes(activeSection) && versionItems.length > 0 && (
+          <MenuButton onClick={() => setShowVersionsMenu(!showVersionsMenu)}>
+            ☰ {activeVersionItem?.icon} {activeVersionItem?.label || 'Оберіть версію'}
+          </MenuButton>
         )}
       </MenuBar>
 
@@ -112,13 +131,6 @@ const ManageDbStructureComponent = () => {
           onItemClick={setSelectedVersion}
           isOpen={showVersionsMenu}
           onClose={() => setShowVersionsMenu(false)}
-        />
-        <SideMenuPanel
-          items={versionParametrsItems}
-          // activeItem={selectedVersion}
-          onItemClick={setSelectedVersion}
-          // isOpen={showVersionsMenu}
-          // onClose={() => setShowVersionsMenu(false)}
         />
 
         {/* Контент */}

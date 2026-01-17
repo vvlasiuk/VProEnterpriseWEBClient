@@ -80,54 +80,6 @@ const SideMenuPanel = ({
             flexWrap: 'wrap'
           }}>
             
-            {/* Фільтри */}
-            {params.filters && params.filters.length > 0 && (
-              <div style={{ display: 'flex', gap: '5px' }}>
-                {params.filters.map(filter => (
-                  <button
-                    key={filter.id}
-                    className={`param-button ${filter.active ? 'active' : ''}`}
-                    onClick={() => handleParamClick('filter', filter.id)}
-                    style={{
-                      padding: '5px 10px',
-                      fontSize: '12px',
-                      cursor: 'pointer',
-                      border: '1px solid var(--border-color)',
-                      borderRadius: '4px',
-                      backgroundColor: filter.active ? 'var(--accent-color)' : 'transparent'
-                    }}
-                  >
-                    {filter.icon && <span>{filter.icon}</span>}
-                    {filter.label && <span style={{ marginLeft: '4px' }}>{filter.label}</span>}
-                  </button>
-                ))}
-              </div>
-            )}
-
-            {/* Сортування */}
-            {params.sort && params.sort.options && (
-              <div style={{ display: 'flex', gap: '5px' }}>
-                {params.sort.options.map(sortOption => (
-                  <button
-                    key={sortOption.id}
-                    className={`param-button ${params.sort.active === sortOption.id ? 'active' : ''}`}
-                    onClick={() => handleParamClick('sort', sortOption.id)}
-                    style={{
-                      padding: '5px 10px',
-                      fontSize: '12px',
-                      cursor: 'pointer',
-                      border: '1px solid var(--border-color)',
-                      borderRadius: '4px',
-                      backgroundColor: params.sort.active === sortOption.id ? 'var(--accent-color)' : 'transparent'
-                    }}
-                  >
-                    {sortOption.icon && <span>{sortOption.icon}</span>}
-                    {sortOption.label && <span style={{ marginLeft: '4px' }}>{sortOption.label}</span>}
-                  </button>
-                ))}
-              </div>
-            )}
-
             {/* Дії */}
             {params.actions && params.actions.length > 0 && (
               <div style={{ display: 'flex', gap: '5px' }}>
@@ -145,7 +97,7 @@ const SideMenuPanel = ({
                     }}
                   >
                     {action.icon && <span>{action.icon}</span>}
-                    {action.label && <span style={{ marginLeft: '4px' }}>{action.label}</span>}
+                    {/* {action.label && <span style={{ marginLeft: '4px' }}>{action.label}</span>} */}
                   </button>
                 ))}
               </div>
