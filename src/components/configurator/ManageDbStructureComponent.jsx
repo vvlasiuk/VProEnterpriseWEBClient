@@ -4,6 +4,7 @@ import SideMenuPanel from '../menu/SideMenuPanel';
 import MenuBar from '../menu/MenuBar';
 import MenuButton from '../menu/MenuButton';
 import configuratorServices from '../../services/configuratorServices';
+import SysStructureContent from './SysStructureContent';
 
 const ManageDbStructureComponent = () => {
   const [activeSection, setActiveSection] = useState('info');
@@ -89,7 +90,7 @@ const ManageDbStructureComponent = () => {
       case 'app_structure':
         return <div>Структура таблиць. Версія: {selectedVersion}</div>;
       case 'sys_structure':
-        return <div>Оновлення платформи. Версія: {selectedVersion}</div>;
+        return <SysStructureContent selectedVersion={selectedVersion} />;
       default:
         return null;
     }
