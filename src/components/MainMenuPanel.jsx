@@ -4,6 +4,7 @@ import BrandsComponent from './BrandsComponent';
 const menuItems = [
   { title: 'Бренди', command: 'openBrandsList', content: <BrandsComponent /> },
   { title: 'Користувачі', command: 'openUsersList', content: <BrandsComponent /> },
+  { title: 'Надходження на сервіс', command: 'openToolEntryForSharpening'},
   // { title: 'Звіти', command: 'openReports', content: <ReportsComponent /> }
 ];
 

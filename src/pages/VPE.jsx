@@ -11,6 +11,7 @@ import ModelSchemasComponent from '../components/configurator/ModelSchemasCompon
 import DataBaseSchemasComponent from '../components/configurator/DataBaseSchemasComponent';
 import CompareSchemasComponent from '../components/configurator/CompareSchemasComponent';
 import ManageDbStructureComponent from '../components/configurator/ManageDbStructureComponent';
+import ToolEntryForSharpening from '../components/documents/lists/ToolEntryForSharpening';
 
 const VPE = () => {
   const [showMenu, setShowMenu] = React.useState(false);
@@ -59,6 +60,8 @@ const VPE = () => {
       return <CompareSchemasComponent/>;  
     case 'openManageDb':
       return <ManageDbStructureComponent/>;  
+    case 'openToolEntryForSharpening':
+      return <ToolEntryForSharpening/>;  
     default:
       return null;
     } 
