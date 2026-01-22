@@ -29,6 +29,9 @@
     "react-router-dom": "^7.9.4",
     "react-scripts": "^5.0.1"
   },
+  "devDependencies": {
+    "source-map-loader": "^4.0.0"
+  },
   "browserslist": {
     "production": [
       ">0.2%",

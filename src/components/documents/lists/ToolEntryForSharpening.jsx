@@ -19,13 +19,14 @@ const columns = [
 
 const ToolEntryForSharpening = ({ addTab }) => {
   const [entries, setEntries] = useState([]);
-  const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 50 });
+  const [columnFilters, setColumnFilters] = useState([]);
+  const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 10 });
   const [total, setTotal] = useState(0);
-  const fileInputRef = useRef(null);
+  // const fileInputRef = useRef(null);
 
   const handleRefresh = () => {
     const skip = pagination.pageIndex * pagination.pageSize;
-    documentService.getToolEntryForSharpening(skip, pagination.pageSize)
+    documentService.getToolEntryForSharpening(skip, pagination.pageSize, columnFilters)
       .then(response => {
         // Захист від undefined/null - завжди використовуємо масив
         setEntries(response?.data || []);
@@ -40,8 +41,10 @@ const ToolEntryForSharpening = ({ addTab }) => {
   };
 
   useEffect(() => {
+    console.log('Filters changed:', columnFilters);  // Перевір чи змінюються фільтри
+
     const skip = pagination.pageIndex * pagination.pageSize;
-    documentService.getToolEntryForSharpening(skip, pagination.pageSize)
+    documentService.getToolEntryForSharpening(skip, pagination.pageSize, columnFilters)
       .then(response => {
         // Захист від undefined/null - завжди використовуємо масив
         setEntries(response?.data || []);
@@ -53,7 +56,7 @@ const ToolEntryForSharpening = ({ addTab }) => {
         setEntries([]);
         setTotal(0);
       });
-  }, [pagination.pageIndex, pagination.pageSize]);
+  }, [pagination.pageIndex, pagination.pageSize, columnFilters]);
 
   // const handleUploadClick = () => {
   //   fileInputRef.current.click();
@@ -81,11 +84,18 @@ const ToolEntryForSharpening = ({ addTab }) => {
       <MaterialReactTable
         columns={columns}
         data={entries}  // Завжди буде масив, навіть якщо порожній
+        manualFiltering
         manualPagination
         rowCount={total}
-        state={{ pagination }}
+        state={{ pagination, columnFilters }}
+        onColumnFiltersChange={setColumnFilters}
         onPaginationChange={setPagination}
         initialState={{ density: 'compact' }}
+        // muiPaginationProps={{
+        //   rowsPerPageOptions: [5, 10, 15],
+        //   showFirstButton: true,
+        //   showLastButton: true,
+        // }}
         renderTopToolbarCustomActions={() => (
           <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
             {/* <IconButton onClick={handleUploadClick} title="Завантажити файл">
