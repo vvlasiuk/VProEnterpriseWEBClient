@@ -1,4 +1,14 @@
 import React from 'react';
+import AddIcon from '@mui/icons-material/Add';
+import EditIcon from '@mui/icons-material/Edit';
+import InfoIcon from '@mui/icons-material/Info';
+
+const iconMap = {
+  'AddIcon': <AddIcon />,
+  'EditIcon': <EditIcon />,
+  'InfoIcon': <InfoIcon />,
+  // додай інші
+};
 
 const HeaderTabsPanel = ({ tabs, activeTab, setActiveTab, setTabs }) => (
   <div style={{
@@ -19,15 +29,15 @@ const HeaderTabsPanel = ({ tabs, activeTab, setActiveTab, setTabs }) => (
   }}>
     {tabs.map(tab => (
       <div
-        key={tab.title}
+        key={tab.command}
         style={{
           display: 'flex',
           alignItems: 'center',
           padding: '6px 18px',
           marginRight: '8px',
           borderRadius: '6px 6px 0 0',
-          border: activeTab === tab.title ? '1px solid #ffd600' : '1px solid #e0e0e0',
-          fontWeight: activeTab === tab.title ? 'bold' : 'normal',
+          border: activeTab === tab.command ? '1px solid #ffd600' : '1px solid #e0e0e0',
+          fontWeight: activeTab === tab.command ? 'bold' : 'normal',
           cursor: 'pointer',
           position: 'relative',
           flexShrink: 0,             // Запобігаємо стисканню табів
@@ -35,16 +45,18 @@ const HeaderTabsPanel = ({ tabs, activeTab, setActiveTab, setTabs }) => (
           boxSizing: 'border-box',  // Додати це
         }}
       >
-        <span onClick={() => setActiveTab(tab.title)} style={{ marginRight: '8px' }}>
+        <span onClick={() => setActiveTab(tab.command)} style={{ marginRight: '8px', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+          {/* {tab.icon} */}
+          {tab.iconName && iconMap[tab.iconName]}
           {tab.title}
         </span>
         <span
           onClick={e => {
             e.stopPropagation();
-            setTabs(tabs.filter(t => t.title !== tab.title));
-            if (activeTab === tab.title && tabs.length > 1) {
-              const nextTab = tabs.find(t => t.title !== tab.title);
-              setActiveTab(nextTab ? nextTab.title : '');
+            setTabs(tabs.filter(t => t.command !== tab.command));
+            if (activeTab === tab.command && tabs.length > 1) {
+              const nextTab = tabs.find(t => t.command !== tab.command);
+              setActiveTab(nextTab ? nextTab.command : '');
             }
           }}
           style={{

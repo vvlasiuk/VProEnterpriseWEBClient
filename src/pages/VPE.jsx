@@ -11,9 +11,11 @@ import ModelSchemasComponent from '../components/configurator/ModelSchemasCompon
 import DataBaseSchemasComponent from '../components/configurator/DataBaseSchemasComponent';
 import CompareSchemasComponent from '../components/configurator/CompareSchemasComponent';
 import ManageDbStructureComponent from '../components/configurator/ManageDbStructureComponent';
-import ToolEntryForSharpening from '../components/documents/lists/ToolEntryForSharpening';
+import ToolEntryForSharpeningForm from '../components/documents/ToolEntryForSharpening/forms/form';
+import ToolEntryForSharpeningList from '../components/documents/ToolEntryForSharpening/lists/list';
 
 const VPE = () => {
+  // console.log('VPE component mounted');
   const [showMenu, setShowMenu] = React.useState(false);
   const initialTabs = JSON.parse(localStorage.getItem('tabs') || '[]');
   const [tabs, setTabs] = React.useState(initialTabs);
@@ -22,11 +24,13 @@ const VPE = () => {
   const username = localStorage.getItem('username') || 'err user';
 
   const addTab = (menuItem) => {
-    if (!tabs.some(tab => tab.title === menuItem.title)) {
-      setTabs([...tabs, menuItem]);
-      setActiveTab(menuItem.title);
+    // if (!tabs.some(tab => tab.id === menuItem.id)) {
+    // if (!tabs.some(tab => tab.title === menuItem.title)) {
+    if (!tabs.some(tab => tab.command === menuItem.command)) {
+        setTabs([...tabs, menuItem]);
+        setActiveTab(menuItem.command);
     } else {
-      setActiveTab(menuItem.title);
+      setActiveTab(menuItem.command);
     }
   };
 
@@ -38,9 +42,17 @@ const VPE = () => {
     localStorage.setItem('activeTab', activeTab);
   }, [activeTab]);
 
-  const activeTabObj = tabs.find(tab => tab.title === activeTab);
+  const activeTabObj = tabs.find(tab => tab.command === activeTab);
+  // console.log('activeTab:', activeTab);
+  // console.log('tabs:', tabs);
+  // console.log('activeTabObj:', activeTabObj);
 
   const getTabContent = (tab) => {
+
+  // console.log('getTabContent - tab:', tab);
+  // console.log('activeTabObj:', activeTabObj);
+  // console.log('allTabs:', tabs);
+   
   switch (tab.command) {
     case 'openBrandsList':
       return <BrandsComponent />;
@@ -61,7 +73,9 @@ const VPE = () => {
     case 'openManageDb':
       return <ManageDbStructureComponent/>;  
     case 'openToolEntryForSharpening':
-      return <ToolEntryForSharpening/>;  
+      return <ToolEntryForSharpeningList addTab={addTab}/>;  
+    case 'addToolEntryForSharpening':
+      return <ToolEntryForSharpeningForm addTab={addTab} />;  
     default:
       return null;
     } 

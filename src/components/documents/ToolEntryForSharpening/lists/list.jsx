@@ -4,10 +4,11 @@ import { MaterialReactTable } from 'material-react-table';
 import IconButton from '@mui/material/IconButton';
 // import AddIcon from '@mui/icons-material/Add';
 import RefreshIcon from '@mui/icons-material/Refresh';
+import AddIcon from '@mui/icons-material/Add';
 // import EditIcon from '@mui/icons-material/Edit';
 // import DeleteIcon from '@mui/icons-material/Delete';
 // import UploadFileIcon from '@mui/icons-material/UploadFile';
-import documentService from '../../../services/documentService';
+import documentService from '../../../../services/documentService';
 
 const columns = [
   // { accessorKey: '_id', header: 'ID' },
@@ -40,8 +41,19 @@ const ToolEntryForSharpening = ({ addTab }) => {
       });
   };
 
+  const handleAdd = () => {
+    // console.log('handleAdd called, addTab:', typeof addTab);
+    addTab({
+      // id: uuidv4(), 
+      title: 'Надходження на сервіс',
+      // icon: <AddIcon />,
+      iconName: 'AddIcon',
+      command: 'addToolEntryForSharpening',
+    });
+  };
+
   useEffect(() => {
-    console.log('Filters changed:', columnFilters);  // Перевір чи змінюються фільтри
+    // console.log('Filters changed:', columnFilters);  // Перевір чи змінюються фільтри
 
     const skip = pagination.pageIndex * pagination.pageSize;
     documentService.getToolEntryForSharpening(skip, pagination.pageSize, columnFilters)
@@ -103,6 +115,9 @@ const ToolEntryForSharpening = ({ addTab }) => {
             </IconButton> */}
             <IconButton onClick={handleRefresh} title="Оновити">
               <RefreshIcon />
+            </IconButton>
+            <IconButton onClick={handleAdd} title="Створити">
+              <AddIcon />
             </IconButton>
           </div>
         )}
